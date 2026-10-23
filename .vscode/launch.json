@@ -1,0 +1,12 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Run JavaFX Application",
+      "request": "launch",
+      "mainClass": "application.Main",
+      "vmArgs": "--module-path C:/Users/dana.guensche/javafx/javafx-sdk-25/lib --add-modules javafx.controls,javafx.fxml"
+    }
+  ]
+}
