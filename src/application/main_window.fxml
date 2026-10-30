@@ -62,6 +62,8 @@
                <Label fx:id="availableCountLabel" text="0" />
             </HBox>
 
+            <Button fx:id="closeButton" onAction="#closeWindow" text="Beenden" />
+
          </VBox>
       </children>
    </HBox>
