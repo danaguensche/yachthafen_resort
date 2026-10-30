@@ -8,6 +8,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
+//Label import für Checkboxen
+import javafx.scene.control.Label;
+
 // Der Controller enthält die Aktionen für die Oberfläche
 // "public" bedeutet, dass die Klasse auch außerhalb ihres Packages
 // verwendet werden kann
@@ -30,6 +33,37 @@ public class main_windowController {
     // "double" ist ein Zahlentyp, der auch Nachkommastellen erlaubt
     private double xOffset;
     private double yOffset;
+
+    // Labels für die Checkboxen
+    @FXML
+    private Label lockedCountLabel;
+
+    @FXML
+    private Label rentedCountLabel;
+
+    @FXML
+    private Label blockedCountLabel;
+
+    @FXML
+    private Label availableCountLabel;
+
+    private int lockedCount = 1;
+    private int rentedCount = 5;
+    private int blockedCount = 3;
+    private int availableCount = 2;
+
+    @FXML
+    private void initialize() {
+        updateCountLabels();
+    }
+
+    // Überträgt die aktuellen Zahlen in die Oberfläche
+    private void updateCountLabels() {
+        lockedCountLabel.setText(Integer.toString(lockedCount));
+        rentedCountLabel.setText(Integer.toString(rentedCount));
+        blockedCountLabel.setText(Integer.toString(blockedCount));
+        availableCountLabel.setText(Integer.toString(availableCount));
+    }
 
     // Minimiert das Fenster
     //
@@ -56,7 +90,7 @@ public class main_windowController {
         Stage stage = getStage();
 
         // isMaximized() liefert:
-        // true  = Fenster ist maximiert
+        // true = Fenster ist maximiert
         // false = Fenster ist nicht maximiert
         //
         // Dadurch wird ein normales Fenster maximiert
