@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Region?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="application.main_windowController">
+
+    <HBox fx:id="titleBar"
+          onMousePressed="#onTitlePressed"
+          onMouseDragged="#onTitleDragged">
+
+        <Label text="Yachthafen Resort"/>
+
+        <Region HBox.hgrow="ALWAYS"/>
+
+        <Button text="–" onAction="#minimizeWindow"/>
+        <Button text="□" onAction="#maximizeWindow"/>
+        <Button text="✕" onAction="#closeWindow"/>
+    </HBox>
+
+</VBox>
