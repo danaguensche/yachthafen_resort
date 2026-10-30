@@ -2,70 +2,139 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.shape.Rectangle?>
 
-<VBox prefHeight="650.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/26"
-   xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.main_windowController">
+<VBox prefWidth="950.0" prefHeight="550.0"
+      xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="application.main_windowController">
 
-   <HBox fx:id="titleBar" onMouseDragged="#onTitleDragged" onMousePressed="#onTitlePressed">
+    <!-- Titelleiste -->
+    <HBox fx:id="titleBar" alignment="CENTER_LEFT" spacing="8.0"
+          onMousePressed="#onTitlePressed"
+          onMouseDragged="#onTitleDragged">
 
-      <Label text="Übersicht Liegeplätze" />
+        <Label text="Übersicht Liegeplätze"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button text="–" onAction="#minimizeWindow"/>
+        <Button text="□" onAction="#maximizeWindow"/>
+        <Button text="✕" onAction="#closeWindow"/>
+    </HBox>
 
-      <Region HBox.hgrow="ALWAYS" />
+    <HBox spacing="20.0" VBox.vgrow="ALWAYS">
+        <padding>
+            <Insets top="15.0" right="15.0"
+                    bottom="15.0" left="15.0"/>
+        </padding>
 
-      <Button onAction="#minimizeWindow" text="–" />
-      <Button onAction="#maximizeWindow" text="□" />
-      <Button onAction="#closeWindow" text="✕" />
-   </HBox>
-   <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0" VBox.vgrow="ALWAYS">
-      <padding>
-         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-      </padding>
-      <children>
-         <Pane prefHeight="480.0" prefWidth="650.0" HBox.hgrow="ALWAYS" />
-         <VBox prefHeight="200.0" prefWidth="260.0" spacing="20.0">
+        <!-- Hafen: Orange = Stege, Blau = Wasser -->
+        <Pane fx:id="harborPane"
+              minWidth="620.0" prefWidth="620.0"
+              minHeight="440.0" prefHeight="440.0"
+              maxHeight="440.0"
+              style="-fx-background-color: #b94720;">
+
+            <Rectangle x="15.0" y="155.0"
+                       width="605.0" height="145.0"
+                       fill="#c7dfe8"/>
+
+            <!-- Obere Liegeplätze -->
+            <Button fx:id="liegeplatz1" text="1"
+                    layoutX="15.0" layoutY="30.0"
+                    prefWidth="110.0" prefHeight="125.0"
+                    style="-fx-background-color: #d4b6b6;
+                           -fx-background-radius: 0;"/>
+
+            <Button fx:id="liegeplatz2" text="2"
+                    layoutX="135.0" layoutY="30.0"
+                    prefWidth="110.0" prefHeight="125.0"
+                    style="-fx-background-color: #8bb7dc;
+                           -fx-background-radius: 0;"/>
+
+            <Button fx:id="liegeplatz3" text="3"
+                    layoutX="255.0" layoutY="30.0"
+                    prefWidth="110.0" prefHeight="125.0"
+                    style="-fx-background-color: #8bb7dc;
+                           -fx-background-radius: 0;"/>
+
+            <Button fx:id="liegeplatz4" text="4"
+                    layoutX="375.0" layoutY="30.0"
+                    prefWidth="110.0" prefHeight="125.0"
+                    style="-fx-background-color: #c7dfe8;
+                           -fx-background-radius: 0;"/>
+
+            <Button fx:id="liegeplatz5" text="5"
+                    layoutX="495.0" layoutY="30.0"
+                    prefWidth="110.0" prefHeight="125.0"
+                    style="-fx-background-color: #8bb7dc;
+                           -fx-background-radius: 0;"/>
+
+            <!-- Untere Liegeplätze -->
+            <Button fx:id="liegeplatz6" text="6"
+                    layoutX="15.0" layoutY="300.0"
+                    prefWidth="190.0" prefHeight="110.0"
+                    style="-fx-background-color: #8bb7dc;
+                           -fx-background-radius: 0;"/>
+
+            <Button fx:id="liegeplatz7" text="7"
+                    layoutX="215.0" layoutY="300.0"
+                    prefWidth="190.0" prefHeight="110.0"
+                    style="-fx-background-color: #8bb7dc;
+                           -fx-background-radius: 0;"/>
+
+            <Button fx:id="liegeplatz8" text="8"
+                    layoutX="415.0" layoutY="300.0"
+                    prefWidth="190.0" prefHeight="110.0"
+                    style="-fx-background-color: #c7dfe8;
+                           -fx-background-radius: 0;"/>
+        </Pane>
+
+        <!-- Anzahlen und Filter -->
+        <VBox minWidth="260.0" prefWidth="260.0" spacing="20.0">
 
             <HBox spacing="10.0" alignment="CENTER_LEFT">
-               <CheckBox fx:id="locked"
-                  text="Gesperrte Liegeplätze:"
-                  selected="true" />
-               <Region HBox.hgrow="ALWAYS" />
-               <Label fx:id="lockedCountLabel" text="0" />
+                <Label text="Anzahl Liegeplätze:"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label fx:id="totalCountLabel" text="8"/>
             </HBox>
 
             <HBox spacing="10.0" alignment="CENTER_LEFT">
-               <CheckBox fx:id="rented"
-                  text="Vermietete Liegeplätze:"
-                  selected="true" />
-               <Region HBox.hgrow="ALWAYS" />
-               <Label fx:id="rentedCountLabel" text="0" />
+                <CheckBox fx:id="locked"
+                          text="Gesperrte Liegeplätze:" selected="true"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label fx:id="lockedCountLabel" text="1"/>
             </HBox>
 
             <HBox spacing="10.0" alignment="CENTER_LEFT">
-               <CheckBox fx:id="blocked"
-                  text="Belegte Liegeplätze:"
-                  selected="true" />
-               <Region HBox.hgrow="ALWAYS" />
-               <Label fx:id="blockedCountLabel" text="0" />
+                <CheckBox fx:id="rented"
+                          text="Vermietete Liegeplätze:" selected="true"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label fx:id="rentedCountLabel" text="5"/>
             </HBox>
 
             <HBox spacing="10.0" alignment="CENTER_LEFT">
-               <CheckBox fx:id="available"
-                  text="Verfügbare Liegeplätze:"
-                  selected="true" />
-               <Region HBox.hgrow="ALWAYS" />
-               <Label fx:id="availableCountLabel" text="0" />
+                <CheckBox fx:id="blocked"
+                          text="Belegte Liegeplätze:" selected="true"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label fx:id="blockedCountLabel" text="3"/>
             </HBox>
 
-            <Button fx:id="closeButton" onAction="#closeWindow" text="Beenden" />
+            <HBox spacing="10.0" alignment="CENTER_LEFT">
+                <CheckBox fx:id="available"
+                          text="Verfügbare Liegeplätze:" selected="true"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label fx:id="availableCountLabel" text="2"/>
+            </HBox>
 
-         </VBox>
-      </children>
-   </HBox>
-
+            <Region VBox.vgrow="ALWAYS"/>
+            <Button fx:id="closeButton" text="Beenden"
+                    prefWidth="140.0" onAction="#closeWindow"/>
+        </VBox>
+    </HBox>
 </VBox>
