@@ -1,6 +1,7 @@
 package application;
 
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -17,12 +18,25 @@ public class Main extends Application {
 
     public void start(Stage stage) throws Exception {
         // FXML-Datei wird geladen und in ein Parent-Objekt umgewandelt
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("main_window.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/FXML/main_window.fxml"));
         Parent root = loader.load();
+
+        System.out.println("Hauptfenster: " +
+                getClass().getResource("/application/FXML/main_window.fxml"));
+
+        System.out.println("Dialog: " +
+                getClass().getResource("/application/FXML/dialog.fxml"));
+        FXMLLoader dialogLoader = new FXMLLoader(getClass().getResource("/application/FXML/dialog.fxml"));
+        Parent dialogRoot = dialogLoader.load();
 
         // Einer Stage wird eine Szene hinzugefügt
         // Unterschiedliche Szenen bedeuten unterschiedliche Fensterinhalte
-        Scene scene = new Scene(root);
+
+        // root ist die FXML-Datei, die geladen wurde und die Benutzeroberfläche
+        // darstellt
+        Scene scene = new Scene(dialogRoot);
+
+        // Scene dialogScene = new Scene(dialogRoot);
 
         // Eigenschaften der Stage festlegen
         stage.initStyle(StageStyle.UNDECORATED);
@@ -30,7 +44,7 @@ public class Main extends Application {
         stage.setMinWidth(800);
         stage.setMinHeight(600);
 
-        //Szene hinzufügen und Stage anzeigen
+        // Szene hinzufügen und Stage anzeigen
         stage.setScene(scene);
         stage.show();
     }

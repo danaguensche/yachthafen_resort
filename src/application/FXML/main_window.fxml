@@ -13,7 +13,7 @@
 <VBox prefWidth="950.0" prefHeight="550.0"
       xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="application.main_windowController">
+      fx:controller="application.Controller.OverviewController">
 
     <!-- Titelleiste -->
     <HBox fx:id="titleBar" alignment="CENTER_LEFT" spacing="8.0"
@@ -33,7 +33,6 @@
                     bottom="15.0" left="15.0"/>
         </padding>
 
-        <!-- Hafen: Orange = Stege, Blau = Wasser -->
         <Pane fx:id="harborPane"
               minWidth="620.0" prefWidth="620.0"
               minHeight="440.0" prefHeight="440.0"
@@ -44,7 +43,6 @@
                        width="605.0" height="145.0"
                        fill="#c7dfe8"/>
 
-            <!-- Obere Liegeplätze -->
             <Button fx:id="liegeplatz1" text="1"
                     layoutX="15.0" layoutY="30.0"
                     prefWidth="110.0" prefHeight="125.0"
@@ -75,7 +73,6 @@
                     style="-fx-background-color: #8bb7dc;
                            -fx-background-radius: 0;"/>
 
-            <!-- Untere Liegeplätze -->
             <Button fx:id="liegeplatz6" text="6"
                     layoutX="15.0" layoutY="300.0"
                     prefWidth="190.0" prefHeight="110.0"
@@ -95,7 +92,6 @@
                            -fx-background-radius: 0;"/>
         </Pane>
 
-        <!-- Anzahlen und Filter -->
         <VBox minWidth="260.0" prefWidth="260.0" spacing="20.0">
 
             <HBox spacing="10.0" alignment="CENTER_LEFT">
