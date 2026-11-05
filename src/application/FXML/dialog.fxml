@@ -13,9 +13,11 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.collections.FXCollections?>
 <?import java.lang.String?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 
 
-<VBox prefWidth="950.0" prefHeight="550.0"
+<VBox prefWidth="600.0" prefHeight="250.0"
     xmlns="http://javafx.com/javafx"
     xmlns:fx="http://javafx.com/fxml/1"
     fx:controller="application.Controller.DialogController">
@@ -30,36 +32,71 @@
         <Button text="□" onAction="#maximizeWindow" />
         <Button text="✕" onAction="#closeWindow" />
     </HBox>
-    <VBox minWidth="260.0" prefWidth="260.0" spacing="20.0">
-        <HBox spacing="10.0" alignment="CENTER_LEFT">
-            <Label fx:id="title" text="Bezeichnung:" />
-            <TextField />
-        </HBox>
-        <HBox spacing="10.0" alignment="CENTER_LEFT">
-            <Label fx:id="title" text="Länge (m):" />
-            <TextField />
-        </HBox>
-        <HBox spacing="10.0" alignment="CENTER_LEFT">
-            <Label fx:id="title" text="Breite (m):" />
-            <TextField />
-        </HBox>
-        <HBox spacing="10.0" alignment="CENTER_LEFT">
-            <Label fx:id="title" text="Wassertiefe (cm):" />
-            <TextField />
-        </HBox>
-        <HBox spacing="10.0" alignment="CENTER_LEFT">
-            <Label text="Status:" />
-        
-            <ComboBox fx:id="statusSelect">
-                <items>
-                    <FXCollections fx:factory="observableArrayList">
-                        <String fx:value="gesperrt" />
-                        <String fx:value="vermietet" />
-                        <String fx:value="belegt" />
-                        <String fx:value="verfügbar" />
-                    </FXCollections>
-                </items>
-            </ComboBox>
-        </HBox>
-    </VBox>
+    <HBox>
+        <VBox spacing="20.0">
+            <padding>
+                <Insets top="20.0" right="20.0"
+                    bottom="20.0" left="20.0" />
+            </padding>
+
+            <HBox spacing="10.0" alignment="CENTER_LEFT">
+                <Label text="Bezeichnung:" minWidth="130.0" prefWidth="130.0" />
+                <TextField fx:id="bezeichnungInput" prefWidth="200.0" />
+            </HBox>
+
+            <HBox spacing="10.0" alignment="CENTER_LEFT">
+                <Label text="Länge (m):" minWidth="130.0" prefWidth="130.0" />
+                <TextField fx:id="laengeInput" prefWidth="200.0" />
+            </HBox>
+
+            <HBox spacing="10.0" alignment="CENTER_LEFT">
+                <Label text="Breite (m):" minWidth="130.0" prefWidth="130.0" />
+                <TextField fx:id="breiteInput" prefWidth="200.0" />
+            </HBox>
+
+            <HBox spacing="10.0" alignment="CENTER_LEFT">
+                <Label text="Wassertiefe (cm):" minWidth="130.0" prefWidth="130.0" />
+                <TextField fx:id="wassertiefeInput" prefWidth="200.0" />
+            </HBox>
+
+            <HBox spacing="10.0" alignment="CENTER_LEFT">
+                <Label text="Status:" minWidth="130.0" prefWidth="130.0" />
+
+                <ComboBox fx:id="statusSelect" prefWidth="200.0">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="gesperrt" />
+                            <String fx:value="vermietet" />
+                            <String fx:value="belegt" />
+                            <String fx:value="verfügbar" />
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+            </HBox>
+
+            <HBox spacing="10.0" alignment="BOTTOM_LEFT">
+                <Button text="Speichern" />
+                <Button text="Neues Bild" />
+                <Button text="Dialog schließen" />
+
+            </HBox>
+        </VBox>
+        <VBox spacing="20.0">
+            <padding>
+                <Insets top="20.0" right="20.0"
+                    bottom="20.0" left="20.0" />
+            </padding>
+
+            <Label text="Bild:" />
+
+            <ImageView fx:id="liegeplatzBild"
+                fitWidth="250.0"
+                fitHeight="250.0"
+                preserveRatio="true">
+                <image>
+                    <Image url="@../../img/liegeplatz.jpg" />
+                </image>
+            </ImageView>
+        </VBox>
+    </HBox>
 </VBox>

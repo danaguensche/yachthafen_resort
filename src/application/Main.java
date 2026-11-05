@@ -41,8 +41,8 @@ public class Main extends Application {
         // Eigenschaften der Stage festlegen
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setResizable(true);
-        stage.setMinWidth(800);
-        stage.setMinHeight(600);
+        stage.setMinWidth(600);
+        stage.setMinHeight(250);
 
         // Szene hinzufügen und Stage anzeigen
         stage.setScene(scene);
