@@ -1,7 +1,7 @@
 package application;
 
+import application.Controller.OverviewController;
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -21,12 +21,9 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/FXML/main_window.fxml"));
         Parent root = loader.load();
 
-        System.out.println("Hauptfenster: " +
-                getClass().getResource("/application/FXML/main_window.fxml"));
-
-        System.out.println("Dialog: " +
+        // Dialogoberfläche laden
+        FXMLLoader dialogLoader = new FXMLLoader(
                 getClass().getResource("/application/FXML/dialog.fxml"));
-        FXMLLoader dialogLoader = new FXMLLoader(getClass().getResource("/application/FXML/dialog.fxml"));
         Parent dialogRoot = dialogLoader.load();
 
         // Einer Stage wird eine Szene hinzugefügt
@@ -34,9 +31,15 @@ public class Main extends Application {
 
         // root ist die FXML-Datei, die geladen wurde und die Benutzeroberfläche
         // darstellt
-        Scene scene = new Scene(dialogRoot);
+        Scene scene = new Scene(root);
 
-        // Scene dialogScene = new Scene(dialogRoot);
+        Scene dialogScene = new Scene(dialogRoot);
+
+        // Den zur Hauptoberfläche gehörenden Controller abrufen
+        OverviewController overviewController = loader.getController();
+
+        // Das vorhandene Fenster und die Dialog-Szene übergeben
+        overviewController.setDialogScene(dialogScene);
 
         // Eigenschaften der Stage festlegen
         stage.initStyle(StageStyle.UNDECORATED);

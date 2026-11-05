@@ -2,6 +2,7 @@ package application.Controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.Scene;
 
 public class OverviewController extends WindowController {
 
@@ -22,6 +23,8 @@ public class OverviewController extends WindowController {
     private int blockedCount = 3;
     private int availableCount = 2;
 
+    private Scene dialogScene;
+
     @FXML
     private void initialize() {
         updateCountLabels();
@@ -32,5 +35,14 @@ public class OverviewController extends WindowController {
         rentedCountLabel.setText(Integer.toString(rentedCount));
         blockedCountLabel.setText(Integer.toString(blockedCount));
         availableCountLabel.setText(Integer.toString(availableCount));
+    }
+
+    public void setDialogScene(Scene dialogScene) {
+        this.dialogScene = dialogScene;
+    }
+
+    @FXML
+    private void openDialog() {
+        getStage().setScene(dialogScene);
     }
 }
