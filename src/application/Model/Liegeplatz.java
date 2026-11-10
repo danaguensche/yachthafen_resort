@@ -14,16 +14,31 @@ public class Liegeplatz {
             "verfügbar"
     };
 
-    public Liegeplatz(int id, String bezeichnung, float laenge, float breite, int wassertiefe, String status) {
+    public Liegeplatz(int id, String bezeichnung, float laenge,
+            float breite, int wassertiefe, String status) {
+
+        if (!this.validateLaenge(laenge)) {
+            throw new IllegalArgumentException("Ungültige Länge: " + laenge);
+        }
+
+        if (!this.validateBreite(breite)) {
+            throw new IllegalArgumentException("Ungültige Breite: " + breite);
+        }
+
+        if (!this.validateWassertiefe(wassertiefe)) {
+            throw new IllegalArgumentException("Ungültige Wassertiefe: " + wassertiefe);
+        }
+
+        if (!this.validateStatus(status)) {
+            throw new IllegalArgumentException("Ungültiger Status: " + status);
+        }
+
         this.id = id;
         this.bezeichnung = bezeichnung;
-        this.laenge = laenge;
-        this.breite = breite;
+        this.laenge = Math.round(laenge * 100f) / 100f;
+        this.breite = Math.round(breite * 100f) / 100f;
         this.wassertiefe = wassertiefe;
-        if (!this.validateStatus(status)) {
-            throw new IllegalArgumentException(
-                    "Ungültiger Status: " + status);
-        }
+        this.status = status;
     }
 
     public int getId() {
@@ -46,43 +61,72 @@ public class Liegeplatz {
         return this.laenge;
     }
 
-    public void setLaenge(float laenge) {
-        this.laenge = laenge;
+    public boolean setLaenge(float laenge) {
+        if (this.validateLaenge(laenge)) {
+            this.laenge = Math.round(laenge * 100f) / 100f;
+            return true;
+        }
+        return false;
+    }
+
+    private boolean validateLaenge(float laenge) {
+        return laenge >= 0 && laenge <= 100;
     }
 
     public float getBreite() {
         return this.breite;
     }
 
-    public void setBreite(float breite) {
-        this.breite = breite;
+    public boolean setBreite(float breite) {
+        if (this.validateBreite(breite)) {
+            // 2 Nachkommastellen
+            this.breite = Math.round(breite * 100f) / 100f;
+            return true;
+        }
+        return false;
+    }
+
+    private boolean validateBreite(float breite) {
+
+        return breite >= 0 && breite <= 100;
     }
 
     public int getWassertiefe() {
         return this.wassertiefe;
     }
 
-    public void setWassertiefe(int wassertiefe) {
-        this.wassertiefe = wassertiefe;
+    public boolean setWassertiefe(int wassertiefe) {
+        if (this.validateWassertiefe(wassertiefe)) {
+            this.wassertiefe = wassertiefe;
+            return true;
+        }
+        return false;
+    }
+
+    private boolean validateWassertiefe(int wassertiefe) {
+
+        return wassertiefe >= 0 && wassertiefe <= 1000;
+
     }
 
     public String getStatus() {
         return this.status;
     }
 
-    public String setStatus(String status) {
+    public boolean setStatus(String status) {
         if (this.validateStatus(status)) {
             this.status = status;
-            return "Status wurde erfolgreich geändert";
-        } else {
-            return "Der Status enthält keinen gültigen Wert.";
+            return true;
         }
+        return false;
     }
 
-    public boolean validateStatus(String status) {
+    private boolean validateStatus(String status) {
         for (int i = 0; i < this.allowedStatusValues.length; i++) {
+            // equals weil == in Java bei Strings nicht funktioniert
             if (allowedStatusValues[i].equals(status)) {
                 return true;
+            }
         }
         return false;
     }
