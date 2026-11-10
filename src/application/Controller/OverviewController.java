@@ -3,6 +3,11 @@ package application.Controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.Scene;
+import javafx.scene.Scene;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+
 
 public class OverviewController extends WindowController {
 
@@ -24,6 +29,7 @@ public class OverviewController extends WindowController {
     private int availableCount = 2;
 
     private Scene dialogScene;
+    private Stage dialogStage;
 
     @FXML
     private void initialize() {
@@ -43,6 +49,50 @@ public class OverviewController extends WindowController {
 
     @FXML
     private void openDialog() {
-        getStage().setScene(dialogScene);
+    
+        // Das zweite Fenster nur beim ersten Öffnen erstellen
+        if (dialogStage == null) {
+            dialogStage = new Stage();
+    
+            // Der Dialog gehört zum Hauptfenster
+            dialogStage.initOwner(getStage());
+    
+            // Beide Fenster bleiben bedienbar
+            dialogStage.initModality(Modality.NONE);
+    
+            // Eigene Titelleiste aus deiner FXML verwenden
+            dialogStage.initStyle(StageStyle.UNDECORATED);  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+    
+            // Die Dialogoberfläche gehört jetzt zum zweiten Fenster
+            dialogStage.setScene(dialogScene);
+        }
+    
+        // Fenster anzeigen bzw. erneut öffnen
+        dialogStage.show();
+    
+        // Falls es bereits geöffnet ist, nach vorne holen
+        dialogStage.toFront();
     }
 }
