@@ -1,6 +1,6 @@
 package application;
 
-import application.Controller.OverviewController;
+import application.controller.OverviewController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

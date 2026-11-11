@@ -1,133 +1,113 @@
-package application.Model;
+package application.model;
 
 public class Liegeplatz {
-    private int id;
+
+    public enum Status {
+        GESPERRT("Gesperrt"),
+        VERMIETET("Vermietet"),
+        BELEGT("Belegt"),
+        VERFUEGBAR("Verfügbar");
+
+        private final String anzeigeName;
+
+        Status(String anzeigeName) {
+            this.anzeigeName = anzeigeName;
+        }
+
+        public String getAnzeigeName() {
+            return anzeigeName;
+        }
+    }
+
+    private static final double MAX_ABMESSUNG = 100;   // meter
+    private static final int MAX_WASSERTIEFE = 1000;   // cm
+
+    private final int id;
     private String bezeichnung;
-    private float laenge;
-    private float breite;
+    private double laenge;
+    private double breite;
     private int wassertiefe;
-    private String status;
-    private String[] allowedStatusValues = {
-            "gesperrt",
-            "vermietet",
-            "belegt",
-            "verfügbar"
-    };
+    private Status status;
 
-    public Liegeplatz(int id, String bezeichnung, float laenge,
-            float breite, int wassertiefe, String status) {
-
-        if (!this.validateLaenge(laenge)) {
-            throw new IllegalArgumentException("Ungültige Länge: " + laenge);
-        }
-
-        if (!this.validateBreite(breite)) {
-            throw new IllegalArgumentException("Ungültige Breite: " + breite);
-        }
-
-        if (!this.validateWassertiefe(wassertiefe)) {
-            throw new IllegalArgumentException("Ungültige Wassertiefe: " + wassertiefe);
-        }
-
-        if (!this.validateStatus(status)) {
-            throw new IllegalArgumentException("Ungültiger Status: " + status);
-        }
-
+    public Liegeplatz(int id, String bezeichnung, double laenge,
+                      double breite, int wassertiefe, Status status) {
         this.id = id;
-        this.bezeichnung = bezeichnung;
-        this.laenge = Math.round(laenge * 100f) / 100f;
-        this.breite = Math.round(breite * 100f) / 100f;
-        this.wassertiefe = wassertiefe;
-        this.status = status;
+        setBezeichnung(bezeichnung);
+        setLaenge(laenge);
+        setBreite(breite);
+        setWassertiefe(wassertiefe);
+        setStatus(status);
     }
 
     public int getId() {
-        return this.id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+        return id;
     }
 
     public String getBezeichnung() {
-        return this.bezeichnung;
+        return bezeichnung;
     }
 
     public void setBezeichnung(String bezeichnung) {
+        if (bezeichnung == null || bezeichnung.isBlank()) {
+            throw new IllegalArgumentException("Bezeichnung darf nicht leer sein");
+        }
         this.bezeichnung = bezeichnung;
     }
 
-    public float getLaenge() {
-        return this.laenge;
+    public double getLaenge() {
+        return laenge;
     }
 
-    public boolean setLaenge(float laenge) {
-        if (this.validateLaenge(laenge)) {
-            this.laenge = Math.round(laenge * 100f) / 100f;
-            return true;
+    public void setLaenge(double laenge) {
+        if (!isValidAbmessung(laenge)) {
+            throw new IllegalArgumentException("Ungültige Länge: " + laenge);
         }
-        return false;
+        this.laenge = round(laenge);
     }
 
-    private boolean validateLaenge(float laenge) {
-        return laenge >= 0 && laenge <= 100;
+    public double getBreite() {
+        return breite;
     }
 
-    public float getBreite() {
-        return this.breite;
-    }
-
-    public boolean setBreite(float breite) {
-        if (this.validateBreite(breite)) {
-            // 2 Nachkommastellen
-            this.breite = Math.round(breite * 100f) / 100f;
-            return true;
+    public void setBreite(double breite) {
+        if (!isValidAbmessung(breite)) {
+            throw new IllegalArgumentException("Ungültige Breite: " + breite);
         }
-        return false;
-    }
-
-    private boolean validateBreite(float breite) {
-
-        return breite >= 0 && breite <= 100;
+        this.breite = round(breite);
     }
 
     public int getWassertiefe() {
-        return this.wassertiefe;
+        return wassertiefe;
     }
 
-    public boolean setWassertiefe(int wassertiefe) {
-        if (this.validateWassertiefe(wassertiefe)) {
-            this.wassertiefe = wassertiefe;
-            return true;
+    public void setWassertiefe(int wassertiefe) {
+        if (wassertiefe < 0 || wassertiefe > MAX_WASSERTIEFE) {
+            throw new IllegalArgumentException("Ungültige Wassertiefe: " + wassertiefe);
         }
-        return false;
+        this.wassertiefe = wassertiefe;
     }
 
-    private boolean validateWassertiefe(int wassertiefe) {
-
-        return wassertiefe >= 0 && wassertiefe <= 1000;
-
+    public Status getStatus() {
+        return status;
     }
 
-    public String getStatus() {
-        return this.status;
-    }
-
-    public boolean setStatus(String status) {
-        if (this.validateStatus(status)) {
-            this.status = status;
-            return true;
+    public void setStatus(Status status) {
+        if (status == null) {
+            throw new IllegalArgumentException("Status darf nicht null sein");
         }
-        return false;
+        this.status = status;
     }
 
-    private boolean validateStatus(String status) {
-        for (int i = 0; i < this.allowedStatusValues.length; i++) {
-            // equals weil == in Java bei Strings nicht funktioniert
-            if (allowedStatusValues[i].equals(status)) {
-                return true;
-            }
-        }
-        return false;
+    private boolean isValidAbmessung(double wert) {
+        return wert > 0 && wert < MAX_ABMESSUNG;
+    }
+
+    private double round(double number) {
+        return Math.round(number * 100.0) / 100.0;
+    }
+
+    @Override
+    public String toString() {
+        return bezeichnung + " (" + status.getAnzeigeName() + ")";
     }
 }

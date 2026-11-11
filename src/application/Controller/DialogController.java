@@ -1,4 +1,4 @@
-package application.Controller;
+package application.controller;
 
 public class DialogController extends WindowController {
 

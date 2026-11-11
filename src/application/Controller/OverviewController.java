@@ -1,8 +1,7 @@
-package application.Controller;
+package application.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.Scene;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -63,28 +62,6 @@ public class OverviewController extends WindowController {
             // Eigene Titelleiste aus deiner FXML verwenden
             dialogStage.initStyle(StageStyle.UNDECORATED);  
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            
-    
             // Die Dialogoberfläche gehört jetzt zum zweiten Fenster
             dialogStage.setScene(dialogScene);
         }
