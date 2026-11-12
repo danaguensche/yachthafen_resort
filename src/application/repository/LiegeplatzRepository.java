@@ -73,29 +73,77 @@ public class LiegeplatzRepository {
         try (Reader reader = Files.newBufferedReader(datei, StandardCharsets.UTF_8)) {
 
             /*
-            den gesamten Text lesen und als JSON Baum darstellen
-            Array sollte so aussehen [{...}, {...}, {...}]
-            */
+             * den gesamten Text lesen und als JSON Baum darstellen
+             * Array sollte so aussehen [{...}, {...}, {...}]
+             */
 
             JsonArray array = JsonParser.parseReader(reader).getAsJsonArray();
 
-            //Jedes Element des Array ist ein JSON-Objekt und ein Liegeplatz
+            // Jedes Element des Array ist ein JSON-Objekt und ein Liegeplatz
             for (JsonElement element : array) {
                 JsonObject o = element.getAsJsonObject();
 
                 Liegeplatz liegeplatz = new Liegeplatz(
-                    o.get("id").getAsInt(),
-                    o.get("bezeichnung").getAsString(),
-                    o.get("laenge").getAsDouble(),
-                    o.get("breite").getAsDouble(),
-                    o.get("wassertiefe").getAsInt(),
-                    Status.valueOf(o.get("status").getAsString())
-                );
+                        o.get("id").getAsInt(),
+                        o.get("bezeichnung").getAsString(),
+                        o.get("laenge").getAsDouble(),
+                        o.get("breite").getAsDouble(),
+                        o.get("wassertiefe").getAsInt(),
+                        Status.valueOf(o.get("status").getAsString()));
 
                 liegeplaetze.add(liegeplatz);
             }
         }
 
         return liegeplaetze;
+    }
+
+    /*
+     * Gegenstück zu laden(): nimmt die Liste mit Liegeplatz-Objekten und
+     * schreibt sie als JSON-Array in die Datei
+     * Die Datei wird dabei komplett überschrieben, d.h. es wird immer die
+     * gesamte Liste gespeichert und nicht nur einzelne Änderungen
+     *
+     * throws IOException -> z.B. wenn der Ordner nicht existiert oder die Datei
+     * schreibgeschützt ist, auch hier muss der Aufrufer try/catch verwenden
+     */
+    public void speichern(Path datei, List<Liegeplatz> liegeplaetze) throws IOException {
+        // leeres JSON-Array, wird gleich mit den Liegeplätzen gefüllt
+        JsonArray array = new JsonArray();
+
+        /*
+         * Jeder Liegeplatz wird zu einem JSON-Objekt umgebaut
+         * Die Schlüssel müssen genau so heißen wie in laden(), sonst kann
+         * die Datei beim nächsten Start nicht mehr gelesen werden
+         */
+        for (Liegeplatz liegeplatz : liegeplaetze) {
+            JsonObject o = new JsonObject();
+
+            o.addProperty("id", liegeplatz.getId());
+            o.addProperty("bezeichnung", liegeplatz.getBezeichnung());
+            o.addProperty("laenge", liegeplatz.getLaenge());
+            o.addProperty("breite", liegeplatz.getBreite());
+            o.addProperty("wassertiefe", liegeplatz.getWassertiefe());
+
+            /*
+             * name() gibt den Namen der Konstante zurück (z.B. "VERFUEGBAR")
+             * NICHT getAnzeigeName() verwenden ("Verfügbar"), denn
+             * Status.valueOf() in laden() erwartet genau den Konstantennamen
+             */
+            o.addProperty("status", liegeplatz.getStatus().name());
+
+            array.add(o);
+        }
+
+        /*
+         * try-with-resources wie bei laden(): der Writer wird automatisch
+         * geschlossen, dadurch wird der Inhalt auch wirklich in die Datei geschrieben
+         *
+         * gson.toJson() schreibt das Array dank setPrettyPrinting() eingerückt
+         * in die Datei
+         */
+        try (Writer writer = Files.newBufferedWriter(datei, StandardCharsets.UTF_8)) {
+            gson.toJson(array, writer);
+        }
     }
 }

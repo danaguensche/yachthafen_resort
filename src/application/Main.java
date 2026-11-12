@@ -1,17 +1,12 @@
 package application;
 
-import java.util.List;
-
 import application.controller.OverviewController;
-import application.model.Liegeplatz;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import application.repository.LiegeplatzRepository;
-import java.nio.file.Path;
 
 public class Main extends Application {
 
@@ -22,18 +17,6 @@ public class Main extends Application {
     // Stage stage2 = new Stage();
 
     public void start(Stage stage) throws Exception {
-
-        LiegeplatzRepository repo = new LiegeplatzRepository();
-        try {
-            List<Liegeplatz> liste = repo.laden(Path.of("src/application/storage/liegeplaetze.json"));
-            System.out.println("Anzahl geladen: " + liste.size());
-            for (Liegeplatz lp : liste) {
-                System.out.println(lp);
-            }
-        } catch (Exception e) {
-            System.out.println("Fehler beim Laden:");
-            e.printStackTrace();
-        }
 
         // FXML-Datei wird geladen und in ein Parent-Objekt umgewandelt
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/FXML/main_window.fxml"));

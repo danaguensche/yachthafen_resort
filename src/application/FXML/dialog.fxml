@@ -20,7 +20,7 @@
 <VBox prefWidth="600.0" prefHeight="250.0"
     xmlns="http://javafx.com/javafx"
     xmlns:fx="http://javafx.com/fxml/1"
-    fx:controller="application.Controller.DialogController">
+    fx:controller="application.controller.DialogController">
 
     <HBox fx:id="titleBar" alignment="CENTER_LEFT" spacing="8.0"
         onMousePressed="#onTitlePressed"

@@ -3,6 +3,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "LiegeplatzRepositoryTest",
+      "request": "launch",
+      "mainClass": "application.test.LiegeplatzRepositoryTest",
+      "projectName": "yachthafen_resort_825b48ed"
+    },
+    {
+      "type": "java",
       "name": "Run JavaFX Application",
       "request": "launch",
       "mainClass": "application.Main",

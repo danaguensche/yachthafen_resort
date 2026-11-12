@@ -13,7 +13,7 @@
 <VBox prefWidth="950.0" prefHeight="550.0"
       xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="application.Controller.OverviewController">
+      fx:controller="application.controller.OverviewController">
 
     <!-- Titelleiste -->
     <HBox fx:id="titleBar" alignment="CENTER_LEFT" spacing="8.0"
