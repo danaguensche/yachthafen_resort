@@ -2,18 +2,36 @@ package application.model;
 
 public class Liegeplatz {
 
+    /*Enum ist eine spezielle Klasse die eine Gruppe an Konstanten repräsentiert
+    Es gibt nur genau diese 4 Status, keine weiteren
+    Zugriff über 
+    Status status = Status.GESPERRT
+    System.out.println(status)
+    -> GESPERRT
+    
+    */
     public enum Status {
-        GESPERRT("Gesperrt"),
+        GESPERRT("Gesperrt"),  //Hier werden die Anzeigenamen dem Konstruktor übergeben
         VERMIETET("Vermietet"),
         BELEGT("Belegt"),
         VERFUEGBAR("Verfügbar");
 
+        //Jede Konstante bekommt ihren eigenen Anzeigenamen
         private final String anzeigeName;
 
+        /*
+          Konstruktor bei Enums ist in Java immer private
+          Java ruft ihn einmal pro Konstante beim Laden der Klasse auf
+        */
         Status(String anzeigeName) {
             this.anzeigeName = anzeigeName;
         }
 
+        /*Methode um den Anzeigename zurückzugeben 
+        Status status = Status.GESPERRT
+        System.out.println(status.getAnzeigeName()) -> verfügbar
+        
+        */
         public String getAnzeigeName() {
             return anzeigeName;
         }
