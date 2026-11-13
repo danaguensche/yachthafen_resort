@@ -14,6 +14,9 @@ import application.model.Liegeplatz;
 import application.model.Liegeplatz.Status;
 import application.model.LiegeplatzVerwaltung;
 
+import javafx.scene.Node;
+import javafx.scene.layout.Pane;
+
 public class OverviewController extends WindowController {
 
     @FXML
@@ -30,6 +33,9 @@ public class OverviewController extends WindowController {
 
     @FXML
     private Label totalCountLabel;
+
+    @FXML
+    private Pane harborPane;
 
     private Scene dialogScene;
     private Stage dialogStage;
@@ -49,8 +55,12 @@ public class OverviewController extends WindowController {
         // Bei jeder Änderung der Liste (z.B. Speichern im Dialog)
         // werden die Zähler automatisch neu berechnet
         verwaltung.getLiegeplaetze().addListener(
-                (ListChangeListener<Liegeplatz>) change -> updateCountLabels());
+                (ListChangeListener<Liegeplatz>) change -> {
+                    updateCountLabels();
+                    aktualisiereButtons();
+                });
 
+        aktualisiereButtons();
         updateCountLabels();
     }
 
@@ -95,7 +105,7 @@ public class OverviewController extends WindowController {
             // Beide Fenster bleiben bedienbar
             dialogStage.initModality(Modality.NONE);
 
-            // Titelleiste 
+            // Titelleiste
             dialogStage.initStyle(StageStyle.UNDECORATED);
 
             // Die Dialogoberfläche gehört jetzt zum zweiten Fenster
@@ -107,5 +117,44 @@ public class OverviewController extends WindowController {
 
         // Falls es bereits geöffnet ist, nach vorne holen
         dialogStage.toFront();
+    }
+
+    // Gibt jedem Button die CSS-Klasse seines Status
+    private void aktualisiereButtons() {
+        for (Node node : harborPane.getChildren()) {
+
+            if (!(node instanceof Button)) {
+                continue;
+            }
+            Button button = (Button) node;
+
+            int id = Integer.parseInt(button.getText());
+            Liegeplatz lp = verwaltung.findeNachId(id);
+
+            /*
+             * Alte Status entfernen, sonst hätte der Button nach einer
+             * Änderung zwei Status-Klassen gleichzeitig
+             */
+            button.getStyleClass().removeAll("gesperrt", "vermietet", "belegt", "verfuegbar");
+
+            if (lp == null) {
+                continue;
+            }
+
+            switch (lp.getStatus()) {
+                case GESPERRT:
+                    button.getStyleClass().add("gesperrt");
+                    break;
+                case VERMIETET:
+                    button.getStyleClass().add("vermietet");
+                    break;
+                case BELEGT:
+                    button.getStyleClass().add("belegt");
+                    break;
+                case VERFUEGBAR:
+                    button.getStyleClass().add("verfuegbar");
+                    break;
+            }
+        }
     }
 }

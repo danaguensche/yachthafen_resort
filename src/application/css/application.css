@@ -1,0 +1,23 @@
+.liegeplatz {
+    -fx-background-radius: 0;
+}
+
+.liegeplatz.gesperrt {
+    -fx-background-color: red;
+}
+
+.liegeplatz.vermietet {
+    -fx-background-color: #f2c14e;
+}
+
+.liegeplatz.belegt {
+    -fx-background-color: #8bb7dc;
+}
+
+.liegeplatz.verfuegbar {
+    -fx-background-color: green;
+}
+
+.liegeplatz:hover {
+    -fx-opacity: 0.8;
+}
