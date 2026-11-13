@@ -61,5 +61,21 @@
         "breite": 2.8,
         "wassertiefe": 160,
         "status": "VERMIETET"
+    },
+    {
+        "id": 9,
+        "bezeichnung": "B-4",
+        "laenge": 6.5,
+        "breite": 2.8,
+        "wassertiefe": 160,
+        "status": "VERMIETET"
+    },
+    {
+        "id": 10,
+        "bezeichnung": "B-5",
+        "laenge": 6.5,
+        "breite": 2.8,
+        "wassertiefe": 160,
+        "status": "VERMIETET"
     }
 ]

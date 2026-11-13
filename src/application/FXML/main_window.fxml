@@ -109,31 +109,31 @@
             </HBox>
 
             <HBox spacing="10.0" alignment="CENTER_LEFT">
-                <CheckBox fx:id="locked"
+                <CheckBox fx:id="gesperrt"
                           text="Gesperrte Liegeplätze:" selected="true"/>
                 <Region HBox.hgrow="ALWAYS"/>
-                <Label fx:id="lockedCountLabel" text="1"/>
+                <Label fx:id="gesperrtCountLabel" text="1"/>
             </HBox>
 
             <HBox spacing="10.0" alignment="CENTER_LEFT">
-                <CheckBox fx:id="rented"
+                <CheckBox fx:id="vermietet"
                           text="Vermietete Liegeplätze:" selected="true"/>
                 <Region HBox.hgrow="ALWAYS"/>
-                <Label fx:id="rentedCountLabel" text="5"/>
+                <Label fx:id="vermietetCountLabel" text="5"/>
             </HBox>
 
             <HBox spacing="10.0" alignment="CENTER_LEFT">
-                <CheckBox fx:id="blocked"
+                <CheckBox fx:id="belegt"
                           text="Belegte Liegeplätze:" selected="true"/>
                 <Region HBox.hgrow="ALWAYS"/>
-                <Label fx:id="blockedCountLabel" text="3"/>
+                <Label fx:id="belegtCountLabel" text="3"/>
             </HBox>
 
             <HBox spacing="10.0" alignment="CENTER_LEFT">
-                <CheckBox fx:id="available"
+                <CheckBox fx:id="verfuegbar"
                           text="Verfügbare Liegeplätze:" selected="true"/>
                 <Region HBox.hgrow="ALWAYS"/>
-                <Label fx:id="availableCountLabel" text="2"/>
+                <Label fx:id="verfuegbarCountLabel" text="2"/>
             </HBox>
 
             <Region VBox.vgrow="ALWAYS"/>
