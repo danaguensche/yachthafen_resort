@@ -76,9 +76,9 @@
             </HBox>
 
             <HBox spacing="10.0" alignment="BOTTOM_LEFT">
-                <Button text="Speichern" />
+                <Button text="Speichern" onAction="#speichern"/>
                 <Button text="Neues Bild" />
-                <Button text="Dialog schließen" />
+                <Button text="Dialog schließen" onAction="#schliessen"/>
 
             </HBox>
         </VBox>

@@ -48,4 +48,9 @@ public class DialogController extends WindowController {
             e.printStackTrace();
         }
     }
+
+    @FXML 
+    private void schliessen(){
+        getStage().close();
+    }
 }
