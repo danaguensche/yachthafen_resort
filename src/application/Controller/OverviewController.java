@@ -1,6 +1,9 @@
 package application.controller;
 
+import javafx.collections.ListChangeListener;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
@@ -8,11 +11,8 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import application.model.Liegeplatz;
-import application.repository.LiegeplatzRepository;
-
-import java.nio.file.Path;
-import java.util.List;
-import java.io.IOException;
+import application.model.Liegeplatz.Status;
+import application.model.LiegeplatzVerwaltung;
 
 public class OverviewController extends WindowController {
 
@@ -31,72 +31,59 @@ public class OverviewController extends WindowController {
     @FXML
     private Label totalCountLabel;
 
-    private int totalCount = 0;
-    private int gesperrtCount = 0;
-    private int vermietetCount = 0;
-    private int belegtCount = 0;
-    private int verfuegbarCount = 0;
-
     private Scene dialogScene;
     private Stage dialogStage;
+    private DialogController dialogController;
 
-    private LiegeplatzRepository repo = new LiegeplatzRepository();;
-    private List<Liegeplatz> liegeplaetze;
+    // Gemeinsame Verwaltung – wird von Main übergeben, dieselbe wie im Dialog
+    private LiegeplatzVerwaltung verwaltung;
 
-    @FXML
-    private void initialize() {
-        loadJson();
-        this.totalCount = liegeplaetze.size();
-        setCounterLabels();
+    /*
+     * Wird von Main aufgerufen, NACHDEM die FXML geladen wurde.
+     * Deshalb wird hier gezählt und nicht in initialize(): initialize()
+     * läuft schon während loader.load(), da gibt es die Verwaltung noch nicht.
+     */
+    public void setVerwaltung(LiegeplatzVerwaltung verwaltung) {
+        this.verwaltung = verwaltung;
+
+        // Bei jeder Änderung der Liste (z.B. Speichern im Dialog)
+        // werden die Zähler automatisch neu berechnet
+        verwaltung.getLiegeplaetze().addListener(
+                (ListChangeListener<Liegeplatz>) change -> updateCountLabels());
+
         updateCountLabels();
     }
 
-    private void loadJson() {
-        try {
-            liegeplaetze = repo.laden(Path.of("src/application/storage/liegeplaetze.json"));
-            System.out.println("Anzahl geladen: " + liegeplaetze.size());
-            for (Liegeplatz lp : liegeplaetze) {
-                System.out.println(lp);
-            }
-        } catch (IOException e) {
-            System.out.println("Fehler beim Laden des Repositorys:");
-            e.printStackTrace();
-        }
-    }
-
-    private void setCounterLabels() {
-        for (Liegeplatz lp : liegeplaetze) {
-            switch (lp.getStatus()) {
-                case GESPERRT:
-                    gesperrtCount += 1;
-                    break;
-                case VERMIETET:
-                    vermietetCount += 1;
-                    break;
-                case BELEGT:
-                    belegtCount += 1;
-                    break;
-                case VERFUEGBAR:
-                    verfuegbarCount += 1;
-                    break;
-            }
-        }
-    }
-
+    // Zählt jedes Mal neu, deshalb können sich die Zahlen nicht aufaddieren
     private void updateCountLabels() {
-        totalCountLabel.setText(Integer.toString(totalCount));
-        gesperrtCountLabel.setText(Integer.toString(gesperrtCount));
-        vermietetCountLabel.setText(Integer.toString(vermietetCount));
-        belegtCountLabel.setText(Integer.toString(belegtCount));
-        verfuegbarCountLabel.setText(Integer.toString(verfuegbarCount));
+        totalCountLabel.setText(Integer.toString(verwaltung.getLiegeplaetze().size()));
+        gesperrtCountLabel.setText(Integer.toString(verwaltung.anzahl(Status.GESPERRT)));
+        vermietetCountLabel.setText(Integer.toString(verwaltung.anzahl(Status.VERMIETET)));
+        belegtCountLabel.setText(Integer.toString(verwaltung.anzahl(Status.BELEGT)));
+        verfuegbarCountLabel.setText(Integer.toString(verwaltung.anzahl(Status.VERFUEGBAR)));
     }
 
-    public void setDialogScene(Scene dialogScene) {
+    // Ersetzt setDialogScene(): Szene UND Controller des Dialogs merken
+    public void setDialog(Scene dialogScene, DialogController dialogController) {
         this.dialogScene = dialogScene;
+        this.dialogController = dialogController;
     }
 
     @FXML
-    private void openDialog() {
+    private void openDialog(ActionEvent event) {
+
+        // Welcher Button wurde geklickt? Der Text ("1", "2", ...) ist die ID
+        Button button = (Button) event.getSource();
+        int id = Integer.parseInt(button.getText());
+
+        Liegeplatz liegeplatz = verwaltung.findeNachId(id);
+        if (liegeplatz == null) {
+            System.out.println("Kein Liegeplatz mit ID " + id + " gefunden");
+            return;
+        }
+
+        // Dem Dialog den gewählten Liegeplatz geben (füllt die Eingabefelder)
+        dialogController.zeigeLiegeplatz(liegeplatz);
 
         // Das zweite Fenster nur beim ersten Öffnen erstellen
         if (dialogStage == null) {
@@ -108,7 +95,7 @@ public class OverviewController extends WindowController {
             // Beide Fenster bleiben bedienbar
             dialogStage.initModality(Modality.NONE);
 
-            // Eigene Titelleiste aus deiner FXML verwenden
+            // Titelleiste 
             dialogStage.initStyle(StageStyle.UNDECORATED);
 
             // Die Dialogoberfläche gehört jetzt zum zweiten Fenster

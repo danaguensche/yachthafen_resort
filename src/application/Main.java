@@ -1,22 +1,29 @@
 package application;
 
+import application.controller.DialogController;
 import application.controller.OverviewController;
+import application.model.LiegeplatzVerwaltung;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import java.nio.file.Path;
 
 public class Main extends Application {
-
-    @Override
 
     // Stage repräsentiert das Fenster der Anwendung
     // Man kann mehrere Fenster erstellen
     // Stage stage2 = new Stage();
 
+    @Override
     public void start(Stage stage) throws Exception {
+
+        // Daten einmal laden – dieses Objekt teilen sich beide Controller
+        LiegeplatzVerwaltung verwaltung = new LiegeplatzVerwaltung(
+                Path.of("src/application/storage/liegeplaetze.json"));
+        verwaltung.laden();
 
         // FXML-Datei wird geladen und in ein Parent-Objekt umgewandelt
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/FXML/main_window.fxml"));
@@ -37,10 +44,18 @@ public class Main extends Application {
         Scene dialogScene = new Scene(dialogRoot);
 
         // Den zur Hauptoberfläche gehörenden Controller abrufen
+        // (erst NACH load() möglich)
         OverviewController overviewController = loader.getController();
 
-        // Das vorhandene Fenster und die Dialog-Szene übergeben
-        overviewController.setDialogScene(dialogScene);
+        // Den zum Dialog gehörenden Controller abrufen
+        DialogController dialogController = dialogLoader.getController();
+
+        // Beiden Controllern dieselbe Verwaltung geben
+        dialogController.setVerwaltung(verwaltung);
+        overviewController.setVerwaltung(verwaltung);
+
+        // Die Dialog-Szene und den Dialog-Controller übergeben
+        overviewController.setDialog(dialogScene, dialogController);
 
         // Eigenschaften der Stage festlegen
         stage.initStyle(StageStyle.UNDECORATED);

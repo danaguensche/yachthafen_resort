@@ -7,7 +7,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import application.model.Liegeplatz.Status;
-import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 
 import java.io.IOException;

@@ -42,6 +42,7 @@
             <HBox spacing="10.0" alignment="CENTER_LEFT">
                 <Label text="Bezeichnung:" minWidth="130.0" prefWidth="130.0" />
                 <TextField fx:id="bezeichnungInput" prefWidth="200.0" />
+                
             </HBox>
 
             <HBox spacing="10.0" alignment="CENTER_LEFT">
