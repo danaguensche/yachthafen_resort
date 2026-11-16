@@ -3,6 +3,9 @@ package application;
 import application.controller.DialogController;
 import application.controller.OverviewController;
 import application.model.LiegeplatzVerwaltung;
+import application.seeder.LiegeplatzSeeder;
+
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -24,6 +27,9 @@ public class Main extends Application {
         LiegeplatzVerwaltung verwaltung = new LiegeplatzVerwaltung(
                 Path.of("src/application/storage/liegeplaetze.json"));
         verwaltung.laden();
+
+        LiegeplatzSeeder seeder = new LiegeplatzSeeder();
+        seeder.seed(50);
 
         // FXML-Datei wird geladen und in ein Parent-Objekt umgewandelt
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/FXML/main_window.fxml"));
