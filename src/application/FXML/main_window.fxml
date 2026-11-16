@@ -9,6 +9,8 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.control.ScrollPane?>
 
 <VBox prefWidth="950.0" prefHeight="550.0"
     xmlns="http://javafx.com/javafx"
@@ -34,56 +36,23 @@
                 bottom="15.0" left="15.0" />
         </padding>
 
-        <Pane fx:id="harborPane"
-            minWidth="620.0" prefWidth="620.0"
-            minHeight="440.0" prefHeight="440.0"
-            maxHeight="440.0"
-            style="-fx-background-color: #b94720;">
-
-            <Rectangle x="15.0" y="155.0"
-                width="605.0" height="145.0"
-                fill="#c7dfe8" />
-
-            <Button text="1" styleClass="liegeplatz"
-                layoutX="15.0" layoutY="30.0"
-                prefWidth="110.0" prefHeight="125.0"
-                onAction="#openDialog" />
-
-            <Button text="2" styleClass="liegeplatz"
-                layoutX="135.0" layoutY="30.0"
-                prefWidth="110.0" prefHeight="125.0"
-                onAction="#openDialog" />
-
-            <Button text="3" styleClass="liegeplatz"
-                layoutX="255.0" layoutY="30.0"
-                prefWidth="110.0" prefHeight="125.0"
-                onAction="#openDialog" />
-
-            <Button text="4" styleClass="liegeplatz"
-                layoutX="375.0" layoutY="30.0"
-                prefWidth="110.0" prefHeight="125.0"
-                onAction="#openDialog" />
-
-            <Button text="5" styleClass="liegeplatz"
-                layoutX="495.0" layoutY="30.0"
-                prefWidth="110.0" prefHeight="125.0"
-                onAction="#openDialog" />
-
-            <Button text="6" styleClass="liegeplatz"
-                layoutX="15.0" layoutY="300.0"
-                prefWidth="190.0" prefHeight="110.0"
-                onAction="#openDialog" />
-
-            <Button text="7" styleClass="liegeplatz"
-                layoutX="215.0" layoutY="300.0"
-                prefWidth="190.0" prefHeight="110.0"
-                onAction="#openDialog" />
-
-            <Button text="8" styleClass="liegeplatz"
-                layoutX="415.0" layoutY="300.0"
-                prefWidth="190.0" prefHeight="110.0"
-                onAction="#openDialog" />
-        </Pane>
+        <ScrollPane fitToWidth="true"
+            hbarPolicy="NEVER"
+            vbarPolicy="AS_NEEDED"
+            minWidth="500.0" prefWidth="500.0"
+            style="-fx-background: #c7dfe8; -fx-background-color: #c7dfe8;"
+            xmlns="http://javafx.com"
+            xmlns:fx="http://javafx.com">
+            <content>
+                <FlowPane fx:id="harborPane"
+                    hgap="10.0" vgap="10.0"
+                    style="-fx-background-color: #c7dfe8;">
+                    <padding>
+                        <Insets top="10.0" right="10.0" bottom="10.0" left="10.0" />
+                    </padding>
+                </FlowPane>
+            </content>
+        </ScrollPane>
 
         <VBox minWidth="260.0" prefWidth="260.0" spacing="20.0">
 

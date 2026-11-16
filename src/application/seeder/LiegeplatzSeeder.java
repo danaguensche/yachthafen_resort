@@ -18,9 +18,8 @@ public class LiegeplatzSeeder {
     private final char[] buchstaben = { 'A', 'B', 'C', 'D', 'E', 'F' };
     private final Status[] alleStatus = Status.values();
 
-    private Path datei = Path.of("src/application/storage/liegeplaetze.json");
 
-    public void seed(int anzahl) {
+    public void seed(int anzahl, Path datei) {
         generateLiegeplaetze(anzahl);
         try {
             repo.speichern(datei, liegeplaetze);

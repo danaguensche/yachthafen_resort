@@ -51,6 +51,7 @@ public class OverviewController extends WindowController {
      */
     public void setVerwaltung(LiegeplatzVerwaltung verwaltung) {
         this.verwaltung = verwaltung;
+        this.generateButtons();
 
         // Bei jeder Änderung der Liste (z.B. Speichern im Dialog)
         // werden die Zähler automatisch neu berechnet
@@ -62,6 +63,18 @@ public class OverviewController extends WindowController {
 
         aktualisiereButtons();
         updateCountLabels();
+    }
+
+    private void generateButtons() {
+        for (Liegeplatz li : verwaltung.getLiegeplaetze()) {
+            Button button = new Button(Integer.toString(li.getId()));
+    
+            button.getStyleClass().add("liegeplatz");
+            button.setPrefSize(80, 60);
+            button.setOnAction(this::openDialog);
+    
+            harborPane.getChildren().add(button);
+        }
     }
 
     // Zählt jedes Mal neu, deshalb können sich die Zahlen nicht aufaddieren
