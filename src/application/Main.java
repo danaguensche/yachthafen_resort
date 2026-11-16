@@ -14,6 +14,9 @@ import javafx.stage.StageStyle;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
 public class Main extends Application {
 
     private static final int ANZAHL_LIEGEPLAETZE = 50;
