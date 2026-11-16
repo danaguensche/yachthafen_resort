@@ -5,16 +5,19 @@ import application.controller.OverviewController;
 import application.model.LiegeplatzVerwaltung;
 import application.seeder.LiegeplatzSeeder;
 
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class Main extends Application {
+
+    private static final int ANZAHL_LIEGEPLAETZE = 50;
 
     // Stage repräsentiert das Fenster der Anwendung
     // Man kann mehrere Fenster erstellen
@@ -23,13 +26,16 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        // Daten einmal laden – dieses Objekt teilen sich beide Controller
-        LiegeplatzVerwaltung verwaltung = new LiegeplatzVerwaltung(
-                Path.of("src/application/storage/liegeplaetze.json"));
-        verwaltung.laden();
+        Path datei = Path.of("src/application/storage/liegeplaetze.json");
 
-        LiegeplatzSeeder seeder = new LiegeplatzSeeder();
-        seeder.seed(50);
+        // wenn Datei nicht existiert erzeuge Liegeplätze
+        if (!Files.exists(datei)) {
+            new LiegeplatzSeeder().seed(ANZAHL_LIEGEPLAETZE, datei);
+        }
+
+        // Daten einmal laden – dieses Objekt teilen sich beide Controller
+        LiegeplatzVerwaltung verwaltung = new LiegeplatzVerwaltung(datei);
+        verwaltung.laden();
 
         // FXML-Datei wird geladen und in ein Parent-Objekt umgewandelt
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/FXML/main_window.fxml"));
